@@ -1,30 +1,6 @@
 #!/bin/bash
-Usage () {
-
- echo -ne "
-Please set correct Parameters
-Anzahl Paramter = $#"
-echo $*
-echo $0
-echo $1
-echo $2
-
-}
-
-
-checkParams () {
-if [[ $# -eq 0 ]] 
-  then
-    echo "$* $0 $1 $2"
-    Usage $* $0 $1 $2
-fi
-}
-
 clear
 set -a
-
-echo $*
-echo $0
 
 echo -ne "
 _______________________________________
@@ -32,4 +8,10 @@ _______________________________________
      Patty's Arch install script
 
 _______________________________________"
-checkParams $* $0 $1 $2
+
+source archinstall.conf
+loadkeys Keyboard_Layout
+sed -i 's/#Color/Color/g' /etc/pacman.conf
+sed -i 's/#ParallelDownloads = 5/ParallelDownloads = 20/g' /etc/pacman.conf
+sed -i -z 's/#\[multilib\]\n#Include/\[multilib\]\nInclude/' /etc/pacman.conf
+reflector --country France,Germany --latest 10 --protocol https --sort rate --save /etc/pacman.d/mirrorlist
