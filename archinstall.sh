@@ -37,7 +37,7 @@ CRYPT_PASSWORD=$CRYPT_PASSWORD
 echo -n $CRYPT_PASSWORD | cryptsetup -q luksFormat --label Arch $ROOT_PARTITION -
 echo -n $CRYPT_PASSWORD | cryptsetup -q luksOpen $ROOT_PARTITION $CRYPT_DEVICE -
 pvcreate /dev/mapper/$CRYPT_DEVICE
-vgcreate $VOLUME_GROUP /dev/mapper/$VOLUME_GROUP
+vgcreate $VOLUME_GROUP /dev/mapper/$CRYPT_DEVICE
 lvcreate -n swap -L10G $VOLUME_GROUP
 lvcreate -n root -l100%FREE $VOLUME_GROUP
 mkfs.fat -n Efi -F32 $ROOT_PARTITION"1"
