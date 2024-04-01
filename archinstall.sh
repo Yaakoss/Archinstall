@@ -31,8 +31,10 @@ export ROOT_PARTITION=$DISK"2"
 echo "ROOT PARTITION=$ROOT_PARTITION"
 
 read -p "Pause..." -s -n1
-echo -n $Crypt_Password | cryptsetup -q luksFormat --label Arch $ROOT_PARTITION -
-echo -n $Crypt_Password | cryptsetup -q luksOpen $ROOT_PARTITION $CRYPT_DEVICE -
+echo -ne "
+CRYPT_PASSWORD=$CRYPT_PASSWORD
+echo -n $CRYPT_PASSWORT | cryptsetup -q luksFormat --label Arch $ROOT_PARTITION -
+echo -n $CRYPT_Password | cryptsetup -q luksOpen $ROOT_PARTITION $CRYPT_DEVICE -
 pvcreate /dev/mapper/$CRYPT_DEVICE
 vgcreate $VOLUME_GROUP /dev/mapper/$VOLUME_GROUP
 lvcreate -n swap -L10G $VOLUME_GROUP
