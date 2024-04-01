@@ -29,8 +29,6 @@ sgdisk -Z $DISK
 sgdisk $DISK -n 1::+1GiB -t 1:ef00
 sgdisk $DISK -n 2::
 sgdisk -p $DISK
-export ROOT_PARTITION=$DISK"2"
-echo "ROOT PARTITION=$ROOT_PARTITION"
 
 #read -p "Pause..." -s -n1
 echo -ne "
@@ -46,3 +44,14 @@ lvcreate -n ArchRoot -l100%FREE $VOLUME_GROUP
 echo "formating Volumes"
 mkfs.fat -n Efi -F32 $ROOT_PARTITION"1"
 mkfs.btrfs -L Root /dev/$VOLUME_GROUP/ArchRoot
+mount -o noatime,compress=zstd /dev/$VOLUME_GROUP/ArchRoot /mnt
+for i in ${!SUBVOLUMES[@]} ;do btrfs su cr /mnt/${SUBVOLUMES[i]}; done
+umount /mnt
+for i in ${!SUBVOLUMES[@]} ;do mount -m -o subvol=${SUBVOLUMES[i]},noatime,compress=zstd /dev/$VOLUME_GROUP/ArchRoot /mnt/${MOUNTPOINTS[i]}; done
+mount -m -o noatime /dev/$DISK"1" /mnt/boot/efi
+pacstrap -K /mnt base base-devel linux linux-firmware openssh git vim sudo nano networkmanager btrfs-progs cryptsetup lvm2 tldr intel-ucode openssh base-devel git vim tldr intel-ucode refind efitools sbsigntools man-db sbctl 
+genfstab -U /mnt >> /mnt/etc/fstab
+
+
+
+
