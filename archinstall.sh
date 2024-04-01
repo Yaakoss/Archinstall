@@ -10,7 +10,7 @@ _______________________________________
 _______________________________________"
 
 source archinstall.conf
-loadkeys Keyboard_Layout
+loadkeys $Keyboard_Layout
 sed -i 's/#Color/Color/g' /etc/pacman.conf
 sed -i 's/#ParallelDownloads = 5/ParallelDownloads = 20/g' /etc/pacman.conf
 sed -i -z 's/#\[multilib\]\n#Include/\[multilib\]\nInclude/' /etc/pacman.conf
