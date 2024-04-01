@@ -7,16 +7,18 @@ _______________________________________
 
      Patty's Arch install script
 
-_______________________________________"
+_______________________________________
+"
 
 source archinstall.conf
-loadkeys $KiEYBOARD_LAYOUT
+loadkeys $KEYBOARD_LAYOUT
 sed -i 's/#Color/Color/g' /etc/pacman.conf
 sed -i 's/#ParallelDownloads = 5/ParallelDownloads = 20/g' /etc/pacman.conf
 sed -i -z 's/#\[multilib\]\n#Include/\[multilib\]\nInclude/' /etc/pacman.conf
 echo -ne "
 Checking mirrors
 "
+read -p "Pause..." -s -n1
 reflector --country $COUNTRY_LIST --latest 10 --protocol https --sort rate --save /etc/pacman.d/mirrorlist
 echo -ne "
 Partitioning Disks
@@ -28,7 +30,7 @@ sgdisk -p $DISK
 export ROOT_PARTITION=$DISK"2"
 echo "ROOT PARTITION=$ROOT_PARTITION"
 
-pause
+read -p "Pause..." -s -n1
 echo -n $Crypt_Password | cryptsetup -q luksFormat --label Arch $ROOT_PARTITION -
 echo -n $Crypt_Password | cryptsetup -q luksOpen $ROOT_PARTITION $CRYPT_DEVICE -
 pvcreate /dev/mapper/$CRYPT_DEVICE
