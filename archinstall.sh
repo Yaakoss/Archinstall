@@ -9,7 +9,7 @@ _______________________________________
 
 _______________________________________
 "
-
+set -x
 source archinstall.conf
 loadkeys $KEYBOARD_LAYOUT
 sed -i 's/#Color/Color/g' /etc/pacman.conf
@@ -18,7 +18,7 @@ sed -i -z 's/#\[multilib\]\n#Include/\[multilib\]\nInclude/' /etc/pacman.conf
 echo -ne "
 Checking mirrors
 "
-read -p "Pause..." -s -n1
+#read -p "Pause..." -s -n1
 reflector --country "$COUNTRY_LIST" --latest 10 --protocol https --sort rate --save /etc/pacman.d/mirrorlist
 echo -ne "
 Partitioning Disks
@@ -30,7 +30,7 @@ sgdisk -p $DISK
 export ROOT_PARTITION=$DISK"2"
 echo "ROOT PARTITION=$ROOT_PARTITION"
 
-read -p "Pause..." -s -n1
+#read -p "Pause..." -s -n1
 echo -ne "
 CRYPT_PASSWORD=$CRYPT_PASSWORD
 "
