@@ -11,4 +11,5 @@ git clone https://github.com/Yaakoss/Archinstall.git
 
 echo "Executing Arch Install Script"
 
+cd $HOME/Archinstall
 exec ./archinstall.sh
