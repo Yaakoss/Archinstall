@@ -19,7 +19,7 @@ sgdisk -Z $DISK
 sgdisk $DISK -n 1::+1GiB -t 1:ef00
 sgdisk $DISK -n 2::
 sgdisk -p $DISK
-ROOT_PARTITON=$DISK"2"
+ROOT_PARTITION=$DISK"2"
 echo -n $Crypt_Password | cryptsetup -q luksFormat --label Arch $ROOT_PARTITION -
 echo -n $Crypt_Password | cryptsetup -q luksOpen $ROOT_PARTITION $CRYPT_DEVICE -
 pvcreate /dev/mapper/$CRYPT_DEVICE
