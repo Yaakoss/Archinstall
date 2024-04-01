@@ -19,7 +19,7 @@ echo -ne "
 Checking mirrors
 "
 read -p "Pause..." -s -n1
-reflector --country $COUNTRY_LIST --latest 10 --protocol https --sort rate --save /etc/pacman.d/mirrorlist
+reflector --country "$COUNTRY_LIST" --latest 10 --protocol https --sort rate --save /etc/pacman.d/mirrorlist
 echo -ne "
 Partitioning Disks
 "
