@@ -54,7 +54,7 @@ sed -i 's/#ParallelDownloads = 5/ParallelDownloads = 20/g' /etc/pacman.conf
 sed -i -z 's/#\[multilib\]\n#Include/\[multilib\]\nInclude/' /etc/pacman.conf
 pacman-key --init
 pacman-key --populate archlinux
-pacman -S refind
+pacman -S --noconfirm refind
 refind-install
 sed -i 's/timeout 20/timeout 5/g' /boot/efi/EFI/refind/refind.conf
 echo "default_selection arch-linux.efi" >> /boot/efi/EFI/refind/refind.conf
