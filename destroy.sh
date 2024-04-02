@@ -1,5 +1,5 @@
 #!/bin/bash
-source archinstall.conf
+source $HOME/Archinstall/archinstall.conf
 umount /mnt --recursive
 vgchange -an $VOLUME_GROUP
 cryptsetup luksCLose $CRYPT_DEVICE
