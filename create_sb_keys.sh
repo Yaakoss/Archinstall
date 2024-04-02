@@ -28,7 +28,7 @@ sign-efi-sig-list -t "$(date --date='1 second' +'%Y-%m-%d %H:%M:%S')" \
 chmod 0600 *.key
 sbctl import-keys --db-cert DB.crt --db-key DB.key --kek-cert KEK.crt --kek-key KEK.key --pk-cert PK.crt --pk-key PK.key
 cp GUID /usr/share/secureboot/
-sbctl enroll-keys
+sbctl enroll-keys --yes-this-might-brick-my-machine
 sbctl sign /boot/efi/EFI/refind/refind_x64.efi
 sbctl sign /boot/efi/EFI/refind/drivers_x64/btrfs_x64.efi
 
