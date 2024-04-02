@@ -4,7 +4,7 @@ mkdir -p $HOME/efi-keys
 cd $HOME/efi-keys
 GUID=`uuidgen --random`
 echo -n $GUID >> GUID
-read NAME
+read -p "Name für das Zertifikat eingeben:" NAME
 
 openssl req -new -x509 -newkey rsa:2048 -subj "/CN=$NAME PK/" -keyout PK.key \
         -out PK.crt -days 3650 -nodes -sha256
