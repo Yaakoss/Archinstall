@@ -1,7 +1,7 @@
 #!/bin/bash
 
 mkdir -p $HOME/efi-keys
-cd efi-keys
+cd $HOME/efi-keys
 GUID=`uuidgen --random`
 echo -n $GUID >> GUID
 read NAME
