@@ -89,4 +89,5 @@ done
 EOF
 chmod +x /etc/initcpio/post/uki-sbsign; 
 mkinitcpio -P
+sed -i 's/purge debug lto)/purge !debug lto)/g' /etc/makepkg.conf
 
