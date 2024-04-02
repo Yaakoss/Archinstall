@@ -51,7 +51,7 @@ for i in ${!SUBVOLUMES[@]} ;do mount -m -o subvol=${SUBVOLUMES[i]},noatime,compr
 mount -m -o noatime /dev/$DISK"1" /mnt/boot/efi
 pacstrap -K /mnt base base-devel linux linux-firmware openssh git vim sudo nano networkmanager btrfs-progs cryptsetup lvm2 tldr intel-ucode openssh base-devel git vim tldr intel-ucode refind efitools sbsigntools man-db sbctl 
 genfstab -U /mnt >> /mnt/etc/fstab
-cp -R /root/Archinstall /mnt/root/Archnstall
+cp -R /root/Archinstall /mnt/root/Archinstall
 cp /etc/pacman.d/mirrorlist /mnt/etc/pacman.d/mirrorlist
 
 
