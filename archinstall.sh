@@ -54,5 +54,6 @@ genfstab -U /mnt >> /mnt/etc/fstab
 cp -R /root/Archinstall /mnt/root/Archinstall
 cp /etc/pacman.d/mirrorlist /mnt/etc/pacman.d/mirrorlist
 arch-chroot /mnt /root/Archinstall/archinstall_stage2.sh
-arch-chroot /mnt /usr/bin/runuser -u patricia -- /root/Archinstall/extended_install.sh
+cp -R /root/Archinstall /mnt/home/patricia/Archinstall
+arch-chroot /mnt /usr/bin/runuser -u patricia -- /home/patricia/Archinstall/extended_install.sh
 
