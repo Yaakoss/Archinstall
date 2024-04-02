@@ -66,6 +66,12 @@ echo "rootfstype=btrfs" >> /etc/cmdline.d/root.conf
 echo "root=UUID=$ROOT_UUID" >> /etc/cmdline.d/root.conf
 echo "rootflags=subvol=@" >> /etc/cmdline.d/root.conf
 echo "bgrt_disable quiet loglevel=4" >> /etc/cmdline.d/root.conf
+echo -ne "
+
+Creating SB-Keys
+
+"
+$HOME/Archinstall/create_sb_keys.sh
 cat >> /etc/initcpio/post/uki-sbsign << EOF
 #!/usr/bin/env bash
 
