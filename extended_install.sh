@@ -1,6 +1,5 @@
 #!/bin/bash
 
-su patricia
 cd ~
 mkdir git
 cd git
