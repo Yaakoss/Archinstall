@@ -41,7 +41,7 @@ echo "vm.swappiness = 10" > /etc/sysctl.d/99-swappiness.conf;
 sed -i 's/MODULES=()/MODULES=(btrfs)/g' /etc/mkinitcpio.conf
 sed -i 's/BINARIES=()/BINARIES=(\/usr\/bin\/btrfs)/g' /etc/mkinitcpio.conf
 sed -i 's/MODULES=()/MODULES=(btrfs)/g' /etc/mkinitcpio.conf
-sed -i 's/base udev autodetect microcode modconf kms keyboard keymap consolefont block filesystems fsck/systemd keyboard autodetect microcode modconf kms block sd-vconsole sd-encrypt filesystems fsck/g' /etc/mkinitcpio.conf
+sed -i 's/base udev autodetect microcode modconf kms keyboard keymap consolefont block filesystems fsck/base systemd sd-encrypt keyboard autodetect modconf kms sd-vconsole block lvm2 filesystems resume fsck/g' /etc/mkinitcpio.conf
 mkdir -p /boot/efi/EFI/Arch-test;
 sed -i 's/default_image/#default_image/g' /etc/mkinitcpio.d/linux.preset
 sed -i 's/#default_uki/default_uki/g' /etc/mkinitcpio.d/linux.preset
