@@ -30,9 +30,9 @@ echo "Enabling SSHD"
 systemctl enable sshd
 
 echo "Setting Root password"
-echo -n ROOT_PW | passwd -
+echo -n ROOT_PW | passwd -s
 
 echo "Adding user $USERNAME"
 useradd -m -G wheel --shell /bin/bash $USERNAME
-echo -n USERNAM̀E_PW |passwd patricia -
+echo -n USERNAM̀E_PW |passwd patricia -s
 
