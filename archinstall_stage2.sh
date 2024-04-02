@@ -7,6 +7,7 @@ HOSTNAME=archie
 ROOT_PW=Pomidory
 USERNAME=patricia
 USERNAME_PW=Pomidory
+source $HOME/Archinstall/archinstall.conf
 
 echo "Setting TimeZone"
 ln -sf /usr/share/zoneinfo/$TIMEZONE /etc/localtime;
@@ -34,7 +35,7 @@ echo -n $ROOT_PW | passwd -s
 
 echo "Adding user $USERNAME"
 useradd -m -G wheel --shell /bin/bash $USERNAME
-echo -n $USERNAM̀E_PW |passwd patricia -s
+echo -n $USERNAME_PW |passwd patricia -s
 sed -i 's/# %wheel/%wheel/g' /etc/sudoers
 
 echo "vm.swappiness = 10" > /etc/sysctl.d/99-swappiness.conf;
@@ -59,8 +60,8 @@ sed -i 's/timeout 20/timeout 5/g' /boot/efi/EFI/refind/refind.conf
 echo "default_selection arch-linux.efi" >> /boot/efi/EFI/refind/refind.conf
 mkdir -p /etc/cmdline.d
 CRYPTLVM_UUID=`blkid $DISK"2" |cut -d' ' -f2 |cut -d\" -f2`
-ROOT_UUID=`blkid /dev/vgSystem/arch |cut -d' ' -f3 |cut -d\" -f2`
-echo "rd.luks.name=$CRYPTLVM_UUID=cryptSystem" >> /etc/cmdline.d/root.conf
+ROOT_UUID=`blkid /dev/$VOLUME_GROUP/ArchRoot |cut -d' ' -f3 |cut -d\" -f2`
+echo "rd.luks.name=$CRYPTLVM_UUID=$CRYPT_DEVICE" >> /etc/cmdline.d/root.conf
 echo "rootfstype=btrfs" >> /etc/cmdline.d/root.conf
 echo "root=UUID=$ROOT_UUID" >> /etc/cmdline.d/root.conf
 echo "rootflags=subvol=@" >> /etc/cmdline.d/root.conf
