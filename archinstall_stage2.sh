@@ -77,7 +77,7 @@ cat >> /etc/initcpio/post/uki-sbsign << EOF
 uki="\$3"
 [[ -n "\$uki" ]] || exit 0
 
-keypairs=(/usr/share/secureboot/keys/db/db.key /usr/share/secureboot/keys/db/db.pem)
+keypairs=(/var/lib/sbctl/keys/db/db.key /var/lib/sbctl/keys/db/db.pem)
 
 for (( i=0; i<\${#keypairs[@]}; i+=2 )); do
     key="\${keypairs[\$i]}" cert="\${keypairs[(( i + 1 ))]}"
