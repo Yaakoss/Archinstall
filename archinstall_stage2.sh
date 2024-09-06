@@ -21,7 +21,6 @@ echo KEYMAP=$KEYMAP >> /etc/vconsole.conf
 locale-gen
 
 echo "setting Hostname"
-echo yoga >> /etc/hostname
 echo $HOSTNAME >> /etc/hostname
 
 echo "Enabling NetworkManager"
