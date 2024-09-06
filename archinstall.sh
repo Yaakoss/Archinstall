@@ -49,7 +49,7 @@ for i in ${!SUBVOLUMES[@]} ;do btrfs su cr /mnt/${SUBVOLUMES[i]}; done
 umount /mnt
 for i in ${!SUBVOLUMES[@]} ;do mount -m -o subvol=${SUBVOLUMES[i]},noatime,compress=zstd /dev/$VOLUME_GROUP/ArchRoot /mnt/${MOUNTPOINTS[i]}; done
 mount -m -o noatime $DISK"1" /mnt/boot/efi
-pacstrap -K /mnt base base-devel linux linux-firmware openssh git vim sudo nano networkmanager btrfs-progs cryptsetup lvm2 tldr intel-ucode openssh base-devel git vim tldr intel-ucode refind efitools sbsigntools man-db sbctl 
+pacstrap -K /mnt base base-devel linux linux-firmware openssh git vim sudo networkmanager btrfs-progs cryptsetup lvm2 tldr intel-ucode openssh base-devel tldr refind efitools sbsigntools man-db sbctl 
 genfstab -U /mnt >> /mnt/etc/fstab
 cp -R /root/Archinstall /mnt/root/Archinstall
 cp /etc/pacman.d/mirrorlist /mnt/etc/pacman.d/mirrorlist
