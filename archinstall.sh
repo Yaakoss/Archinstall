@@ -18,8 +18,22 @@ if [ $USER_MODIFIED = 0 ]; then
 	echo " Exiting Arch install Script..."
 	exit 1
 fi
+echo -ne "
+
+Available Disk Drives...
+
+"
+lsblk -d
+
+echo -ne "
+
+Please select which drive to use...
+"
+read -p "Enter Full Device Name here e.g. /dev/sda: " DISK
 echo "Faisafe"
-read -p "Abbruch benötigt" -s -n1
+exit 1
+#read -p "Abbruch benötigt" -s -n1
+
 echo "Patching /etc/pacman.conf"
 sed -i 's/#Color/Color/g' /etc/pacman.conf
 sed -i 's/#ParallelDownloads = 5/ParallelDownloads = 20/g' /etc/pacman.conf
