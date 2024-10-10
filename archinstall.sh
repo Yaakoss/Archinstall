@@ -13,6 +13,9 @@ _______________________________________
 source archinstall.conf
 echo "Setting Keyboard Layout"
 loadkeys $KEYBOARD_LAYOUT
+if [ $USER_MODIFIED = 0 ]; then
+	exit 1
+fi
 echo "Patching /etc/pacman.conf"
 sed -i 's/#Color/Color/g' /etc/pacman.conf
 sed -i 's/#ParallelDownloads = 5/ParallelDownloads = 20/g' /etc/pacman.conf
