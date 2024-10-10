@@ -47,7 +47,7 @@ Checking mirrors for speed and creating mirrorlist
 reflector --country "$COUNTRY_LIST" --latest 10 --protocol https --sort rate --save /etc/pacman.d/mirrorlist
 #echo "Failsafe"
 #exit 1
-#echo -ne "
+echo -ne "
 Partitioning Disks
 "
 sgdisk -Z $DISK
