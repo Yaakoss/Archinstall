@@ -18,6 +18,8 @@ if [ $USER_MODIFIED = 0 ]; then
 	echo " Exiting Arch install Script..."
 	exit 1
 fi
+echo "Faisafe"
+read -p "Abbruch benötigt" -s -n1
 echo "Patching /etc/pacman.conf"
 sed -i 's/#Color/Color/g' /etc/pacman.conf
 sed -i 's/#ParallelDownloads = 5/ParallelDownloads = 20/g' /etc/pacman.conf
