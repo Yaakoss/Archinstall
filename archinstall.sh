@@ -30,11 +30,13 @@ echo -ne "
 Please select which drive to use...
 "
 read -p "Enter Full Device Name here e.g. /dev/sda: " DISK
-echo "Faisafe"
-exit 1
 #read -p "Abbruch benötigt" -s -n1
-
-echo "Patching /etc/pacman.conf"
+if [[ $DISK == *'nvme'* ]]; then
+	ROOT_PARTITION=$DISK"p2"
+else 
+	ROOT_PARTITION=$DISK"2"
+fi
+echo "Patching /etc/pacman.conf to use Color and 20 parallel downloads"
 sed -i 's/#Color/Color/g' /etc/pacman.conf
 sed -i 's/#ParallelDownloads = 5/ParallelDownloads = 20/g' /etc/pacman.conf
 sed -i -z 's/#\[multilib\]\n#Include/\[multilib\]\nInclude/' /etc/pacman.conf
@@ -43,7 +45,9 @@ Checking mirrors for speed and creating mirrorlist
 "
 #read -p "Pause..." -s -n1
 reflector --country "$COUNTRY_LIST" --latest 10 --protocol https --sort rate --save /etc/pacman.d/mirrorlist
-echo -ne "
+#echo "Failsafe"
+#exit 1
+#echo -ne "
 Partitioning Disks
 "
 sgdisk -Z $DISK
@@ -52,6 +56,7 @@ sgdisk $DISK -n 2::
 sgdisk -p $DISK
 
 #read -p "Pause..." -s -n1
+read -p "Please enter the LUKS Password" -s CRYPT_PASSWORD
 echo -ne "
 creating Luks Volume
 "
