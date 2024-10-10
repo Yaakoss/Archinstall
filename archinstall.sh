@@ -14,6 +14,8 @@ source archinstall.conf
 echo "Setting Keyboard Layout"
 loadkeys $KEYBOARD_LAYOUT
 if [ $USER_MODIFIED = 0 ]; then
+	echo "You first need to modify archinstall.conf"
+	echo " Exiting Arch install Script..."
 	exit 1
 fi
 echo "Patching /etc/pacman.conf"
