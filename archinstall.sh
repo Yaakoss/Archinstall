@@ -47,7 +47,14 @@ sgdisk $DISK -n 2::
 sgdisk -p $DISK
 
 #read -p "Pause..." -s -n1
-read -p "Please enter the LUKS Password" -s CRYPT_PASSWORD
+CRYPT_PASSWORD="1"
+CRYPT_PASSWORD="2"
+until [[ $CRYPT_PASSWORD ne $CRYPT_PASSWORD2 ]]
+do
+	read -p "Please enter the LUKS Password: " -s CRYPT_PASSWORD
+	read -p "Please repeat the LUKS Password: " -s CRYPT_PASSWORD2
+done
+
 printf "\nCreating Luks Volume\n"
 echo -n $CRYPT_PASSWORD | cryptsetup -q luksFormat --label Arch $ROOT_PARTITION -
 echo -n $CRYPT_PASSWORD | cryptsetup -q luksOpen $ROOT_PARTITION $CRYPT_DEVICE -
