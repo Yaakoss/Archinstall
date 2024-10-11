@@ -2,33 +2,29 @@
 clear
 set -a
 
-echo -ne "
-_______________________________________
+cat << "EOF"
 
-     Patty's Arch install script
 
-_______________________________________
-"
+ ____       _   _         _           _             _        _           _        _ _                  _       _
+|  _ \ __ _| |_| |_ _   _( )___      / \   _ __ ___| |__    (_)_ __  ___| |_ __ _| | |   ___  ___ _ __(_)_ __ | |_
+| |_) / _` | __| __| | | |// __|    / _ \ | '__/ __| '_ \   | | '_ \/ __| __/ _` | | |  / __|/ __| '__| | '_ \| __|
+|  __/ (_| | |_| |_| |_| | \__ \   / ___ \| | | (__| | | |  | | | | \__ \ || (_| | | |  \__ \ (__| |  | | |_) | |_
+|_|   \__,_|\__|\__|\__, | |___/  /_/   \_\_|  \___|_| |_|  |_|_| |_|___/\__\__,_|_|_|  |___/\___|_|  |_| .__/ \__|
+
+                    |___/                                                                               |_|
+EOF
 #set -x
 source archinstall.conf
-echo "Setting Keyboard Layout"
+printf "\nSetting Keyboard Layout\n"
 loadkeys $KEYBOARD_LAYOUT
 if [ $USER_MODIFIED = 0 ]; then
 	echo "You first need to modify archinstall.conf"
 	echo " Exiting Arch install Script..."
 	exit 1
 fi
-echo -ne "
-
-Available Disk Drives...
-
-"
+printf "\n\nAvailable Disk Drives...\n\n"
 lsblk -d
-
-echo -ne "
-
-Please select which drive to use...
-"
+printf "\n\nPlease select which drive to use...\n"
 read -p "Enter Full Device Name here e.g. /dev/sda: " DISK
 #read -p "Abbruch benötigt" -s -n1
 if [[ $DISK == *'nvme'* ]]; then
@@ -36,20 +32,16 @@ if [[ $DISK == *'nvme'* ]]; then
 else 
 	ROOT_PARTITION=$DISK"2"
 fi
-echo "Patching /etc/pacman.conf to use Color and 20 parallel downloads"
+printf "\n\nPatching /etc/pacman.conf to use Color and 20 parallel downloads\n"
 sed -i 's/#Color/Color/g' /etc/pacman.conf
 sed -i 's/#ParallelDownloads = 5/ParallelDownloads = 20/g' /etc/pacman.conf
 sed -i -z 's/#\[multilib\]\n#Include/\[multilib\]\nInclude/' /etc/pacman.conf
-echo -ne "
-Checking mirrors for speed and creating mirrorlist
-"
+printf "\nChecking mirrors for speed and creating mirrorlist\n"
 #read -p "Pause..." -s -n1
 reflector --country "$COUNTRY_LIST" --latest 10 --protocol https --sort rate --save /etc/pacman.d/mirrorlist
 #echo "Failsafe"
 #exit 1
-echo -ne "
-Partitioning Disks
-"
+printf "\nPartitioning Disks\n"
 sgdisk -Z $DISK
 sgdisk $DISK -n 1::+1GiB -t 1:ef00
 sgdisk $DISK -n 2::
@@ -57,17 +49,15 @@ sgdisk -p $DISK
 
 #read -p "Pause..." -s -n1
 read -p "Please enter the LUKS Password" -s CRYPT_PASSWORD
-echo -ne "
-creating Luks Volume
-"
+printf "\nCreating Luks Volume\n"
 echo -n $CRYPT_PASSWORD | cryptsetup -q luksFormat --label Arch $ROOT_PARTITION -
 echo -n $CRYPT_PASSWORD | cryptsetup -q luksOpen $ROOT_PARTITION $CRYPT_DEVICE -
-echo " creating LVM"
+printf "\ncreating LVM\n"
 pvcreate /dev/mapper/$CRYPT_DEVICE
 vgcreate $VOLUME_GROUP /dev/mapper/$CRYPT_DEVICE
 lvcreate -n swap -L10G $VOLUME_GROUP
 lvcreate -n ArchRoot -l100%FREE $VOLUME_GROUP
-echo "formating Volumes"
+printf "\nFormating Volumes\n"
 mkfs.fat -n Efi -F32 $DISK"1"
 mkfs.btrfs -L Root /dev/$VOLUME_GROUP/ArchRoot
 mount -o noatime,compress=zstd /dev/$VOLUME_GROUP/ArchRoot /mnt
