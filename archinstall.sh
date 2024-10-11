@@ -51,10 +51,12 @@ CRYPT_PASSWORD="1"
 CRYPT_PASSWORD="2"
 until [[ $CRYPT_PASSWORD == $CRYPT_PASSWORD2 ]]
 do
-	read -p "\nPlease enter the LUKS Password: " -s CRYPT_PASSWORD
-	read -p "\nPlease repeat the LUKS Password: " -s CRYPT_PASSWORD2
+	read -p "Please enter the LUKS Password: " -s CRYPT_PASSWORD
+	printf "\n"
+	read -p "Please repeat the LUKS Password: " -s CRYPT_PASSWORD2
+	printf "\n"
 	if [[ $CRYPT_PASSWORD != $CRYPT_PASSWORD2 ]]; then
-		printf "Passwords do not match, please repeat"
+		printf "\nPasswords do not match, please repeat\n"
 	fi
 done
 
