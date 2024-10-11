@@ -1,4 +1,16 @@
 #!/bin/bash
+
+KEYBOARD_LAYOUT=de-latin1
+COUNTRY_LIST="Germany, France"
+CRYPT_DEVICE=cryptLVM
+VOLUME_GROUP=vgSystem
+SUBVOLUMES=(@ @.snapshots @home @log @pkg @portables @machines @tmp @opt)
+MOUNTPOINTS=(/ /.snapshots /home /var/log /var/cache/pacman/pkg /var/lib/portables /var/lib/machines /tmp /opt)
+Create_User=yes
+Usename=Patricia
+Wheel_member=yes
+
+
 clear
 set -a
 
@@ -13,7 +25,7 @@ cat << "EOF"
                     |___/                                                                               |_|
 EOF
 #set -x
-source archinstall.conf
+#source archinstall.conf
 printf "\nSetting Keyboard Layout\n"
 loadkeys $KEYBOARD_LAYOUT
 if [ $USER_MODIFIED = 0 ]; then
