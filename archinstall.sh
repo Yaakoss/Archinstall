@@ -49,10 +49,13 @@ sgdisk -p $DISK
 #read -p "Pause..." -s -n1
 CRYPT_PASSWORD="1"
 CRYPT_PASSWORD="2"
-until [[ $CRYPT_PASSWORD ne $CRYPT_PASSWORD2 ]]
+until [[ $CRYPT_PASSWORD == $CRYPT_PASSWORD2 ]]
 do
-	read -p "Please enter the LUKS Password: " -s CRYPT_PASSWORD
-	read -p "Please repeat the LUKS Password: " -s CRYPT_PASSWORD2
+	read -p "\nPlease enter the LUKS Password: " -s CRYPT_PASSWORD
+	read -p "\nPlease repeat the LUKS Password: " -s CRYPT_PASSWORD2
+	if [[ $CRYPT_PASSWORD != $CRYPT_PASSWORD2 ]]; then
+		printf "Passwords do not match, please repeat"
+	fi
 done
 
 printf "\nCreating Luks Volume\n"
