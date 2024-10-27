@@ -54,11 +54,18 @@ reflector --country "$COUNTRY_LIST" --latest 10 --protocol https --sort rate --s
 #exit 1
 printf "\nPartitioning Disks\n"
 sgdisk -Z $DISK
-sgdisk $DISK -n 1::+1GiB -t 1:ef00
-sgdisk $DISK -n 2::
+sgdisk $DISK -n 1::+300MiB -t 1:ef00
+sgdisk $DISK -n 2::+500GiB
 sgdisk -p $DISK
 
-#read -p "Pause..." -s -n1
+read -p "Pause..." -s -n1
+printf "\n LVM wird angelegt"
+pvcreate $ROOT_PARTITION
+vgcreate VG_ARCH $ROOT_PARTITION
+lvcreate -L 100G -n root VG_ARCH 
+lvcreate -L 16GB -n swap VG_ARCH
+lvcreate -l 100%FREE -n swap VG_ARCH
+
 CRYPT_PASSWORD="1"
 CRYPT_PASSWORD="2"
 until [[ $CRYPT_PASSWORD == $CRYPT_PASSWORD2 ]]
